@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1">
+    <title></title>
+</head>
+<body>
+  <form>
+        你爱好的运动是？<input type="checkbox" id="CheckedAll" />全选/全不选<br />
+        <input type="checkbox" name="items" value="足球" id="check0" />足球
+        <input type="checkbox" name="items" value="篮球" id="check1" />篮球
+        <input type="checkbox" name="items" value="羽毛球" id="check2" />羽毛球
+        <br />
+        <p id="error"></p>
+        <input type="button" id="send" value="提 交" />
+    </form>
+</body>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript">
+  $(function(){
+
+    $("#send").off("click").on("click",function(){
+      var arr = [];
+      for(var i = 0; i < 3; i++){
+        (function(i){
+          if(!$("#check0").is(":checked") && !$("#check1").is(":checked") && !$("#check2").is(":checked")){
+            $("#error").html("至少选择一个");
+            return false;
+          }else{
+            if($("#check" + i).is(":checked")){
+              arr.push($("#check" + i).val());
+              $("#error").html("选中了" + arr);
+            }
+          }
+        })(i);
+      }
+      console.log(arr);
+    });
+
+
+    $("#CheckedAll").off("click").on("click",function(){
+      for(var i = 0; i < 3; i++){
+        (function(i){
+          if(!$("#check" + i).is(":checked")){
+            this.checked = true;
+          }else{
+            this.checked=false;
+          }
+        })(i);
+      }
+
+      if(this.checked){
+        $("input[name='items']").each(function(){
+          this.checked=true;
+        });
+      }else{
+        $("input[name='items']").each(function(){
+          this.checked=false;
+        });
+      }
+    });
+  });
+
+</script>
+</html>
